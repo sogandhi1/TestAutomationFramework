@@ -7,7 +7,7 @@ import java.util.Properties;
 
 public class PropertiesLoader {
 
-    static Properties configProperties;
+    public static Properties configProperties;
 
     public static String runOnBrowser;
     public static Boolean takeScreenshot;
@@ -22,6 +22,7 @@ public class PropertiesLoader {
     public static boolean headless;
     public static boolean deleteCookies;
     public static boolean remoteRun;
+    public static String appURL;
 
     public static void initializeProperties() throws Exception {
         if (configProperties == null) {
@@ -42,6 +43,7 @@ public class PropertiesLoader {
         headless = Boolean.valueOf(configProperties.getProperty("Headless"));
         deleteCookies = Boolean.valueOf(configProperties.getProperty("DeleteCookies"));
         remoteRun = Boolean.valueOf(configProperties.getProperty("RemoteRun"));
+        appURL = configProperties.getProperty("AppURL");
     }
 
     public static void main(System[] args) throws Exception {

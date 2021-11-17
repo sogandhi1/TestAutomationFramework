@@ -1,17 +1,24 @@
 package com.automationS.components;
 
+import com.automationS.properties.PropertiesLoader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
+import java.util.List;
 
 public class ElementFindBy {
 
     WebDriver driver;
+    WebDriverWait wait;
 
     public ElementFindBy(WebDriver driver) {
         this.driver = driver;
+        wait = new WebDriverWait(this.driver, PropertiesLoader.explicitWaitTime);    //WebDriverWait is the class that implements wait interface
     }
 
     public By findBy(String element) throws Exception {
@@ -50,6 +57,29 @@ public class ElementFindBy {
 
     public WebElement findElementBy(String element) throws Exception {
         By by = findBy(element);
-        return driver.findElement(by);
+        return waitUntillElementVisible(by);
+    }
+    public List<WebElement> findElementsBy(String element) throws Exception {
+        By by = findBy(element);
+        return waitUntillAllElementsVisible(by);
+    }
+
+    public WebElement waitUntillElementVisible(By by) {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+    }
+    public WebElement waitUntillElementFound(By by) {
+        return wait.until(ExpectedConditions.presenceOfElementLocated(by));
+    }
+    public WebElement waitUntillElementClickable(By by) {
+        return wait.until(ExpectedConditions.elementToBeClickable(by));
+    }
+    public boolean waitUntillElementDisappears(WebElement element) {
+        return wait.until(ExpectedConditions.invisibilityOf(element));
+    }
+    public boolean waitUntillElementDisappears(By by) {
+        return wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
+    }
+    public List<WebElement> waitUntillAllElementsVisible(By by) {
+        return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by));
     }
 }
