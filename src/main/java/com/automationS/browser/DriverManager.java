@@ -5,14 +5,14 @@ import org.openqa.selenium.WebDriver;
 
 public class DriverManager {
 
-    public WebDriver driver;
+    public ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
     public WebDriver getDriver() {
-        return driver;
+        return driver.get();
     }
 
     public void setDriver(WebDriver driver) {
-        this.driver = driver;
+        this.driver.set(driver);
     }
 
     public void loadDriver() {
@@ -38,10 +38,12 @@ public class DriverManager {
     }
 
     public void closeBrowser() {
-        driver.close();
+
+        driver.get().close();
     }
 
     public void closeAllBrowser() {
-        driver.quit();
+
+        driver.get().quit();
     }
 }

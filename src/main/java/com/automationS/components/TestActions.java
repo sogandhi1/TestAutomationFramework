@@ -8,8 +8,8 @@ import org.testng.annotations.*;
 
 public class TestActions {
 
-    WebDriver driver;
-    DriverManager driverManager;
+    public ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+    public DriverManager driverManager;
     public BaseActions pageActions;
 
     @BeforeSuite
@@ -19,15 +19,16 @@ public class TestActions {
         driverManager = new DriverManager();
     }
 
-    @BeforeMethod
+    @BeforeMethod (alwaysRun = true)
     public void setUpBrowser() {
         driverManager.loadDriver();
-        driver = driverManager.getDriver();
-        pageActions = new BaseActions(driver);
+        driver.set(driverManager.getDriver());
+        //driver = driverManager.getDriver();
+        pageActions = new BaseActions(driver.get());
         pageActions.launchURL(PropertiesLoader.appURL);
     }
     
-    @AfterMethod
+    @AfterMethod (alwaysRun = true)
     public void terrDownBrowser() {
         driverManager.closeBrowser();
     }

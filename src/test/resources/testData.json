@@ -1,0 +1,12 @@
+{
+  "LoginTest": [
+    {
+      "username": "Admin",
+      "password": "admin123"
+    },
+    {
+      "username": "Admin1",
+      "password": "admin1234"
+    }
+  ]
+}
